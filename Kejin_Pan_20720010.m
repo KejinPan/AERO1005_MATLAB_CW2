@@ -12,6 +12,7 @@ end
 
 
 % Let the LED connected to pin D12 blink several times for testing
+
 for i = 1:5
     writeDigitalPin(a, 'D12', 1); % Supply a high level (5V), and the light will turn on.
     pause(0.5);                   % Pause for 0.5 seconds
@@ -22,6 +23,7 @@ end
 % Insert answers here
 
 %% TASK 1 - READ TEMPERATURE DATA, PLOT, AND WRITE TO A LOG FILE [20 MARKS]
+
 duration = 600; % The designated collection time
 temp = zeros(1, duration); % Pre-allocate memory for storing temperature data
 time = 1:duration;         % timer shaft
@@ -93,9 +95,15 @@ fprintf(fileID, 'Min temp\t\t%.2f C\n', mini);
 fprintf(fileID, 'Average temp\t%.2f C\n\n', average);
 fprintf(fileID, 'Data logging terminated\n');
 fclose(fileID);
+
 % Insert answers here
 
 %% TASK 2 - LED TEMPERATURE MONITORING DEVICE IMPLEMENTATION [25 MARKS]
+% Apply the monitoring function
+if ~exist('a', 'var')
+    a = arduino('COM9', 'Uno');
+end
+temp_monitor(a);
 
 % Insert answers here
 
