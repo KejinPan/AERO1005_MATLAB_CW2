@@ -100,9 +100,7 @@ fclose(fileID);
 
 %% TASK 2 - LED TEMPERATURE MONITORING DEVICE IMPLEMENTATION [25 MARKS]
 % Apply the monitoring function
-if ~exist('a', 'var')
-    a = arduino('COM9', 'Uno');
-end
+
 temp_monitor(a);
 
 % Insert answers here
@@ -110,9 +108,8 @@ temp_monitor(a);
 
 %% TASK 3 - ALGORITHMS – TEMPERATURE PREDICTION [30 MARKS]
 
-% Insert answers here
-
-
-%% TASK 4 - REFLECTIVE STATEMENT [5 MARKS]
+temp_prediction(a);
 
 % Insert answers here
+
+
