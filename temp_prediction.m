@@ -33,22 +33,25 @@ while true
         temp_buffer(1) = [];
     end
 
-    % 3. Calculate Rate of Change (Derivative)
-    rate_C_per_sec = 0;
-    if length(time_buffer) > 1
-        % Calculate slope over the medium term (first to last point in buffer)
-        dt = time_buffer(end) - time_buffer(1);
-        dTemp = temp_buffer(end) - temp_buffer(1);
-        if dt > 0
-            rate_C_per_sec = dTemp / dt;
+    % 3. Calculate Rate of Change (Derivative) with Noise Filtering
+        rate_C_per_sec = 0;
+        
+        if length(time_buffer) > 1
+            % Use the built-in polyfit (polynomial fitting) function in MATLAB
+            % It will refer to all the data points within the past 10 seconds and calculate the most stable slope, completely disregarding any sudden noise.
+            p = polyfit(time_buffer, temp_buffer, 1);
+            rate_C_per_sec = p(1); % The first coefficient of the fitted straight line is the slope (C/s)
+            
+            % We take the average temperature of these 10 seconds as the current display.
+            current_temp = mean(temp_buffer); 
         end
-    end
-
-    % Convert rate to Celsius per minute
-    rate_C_per_min = rate_C_per_sec * 60;
-
-    % 4. Predict expected temperature in 5 minutes (300 seconds)
-    predicted_temp = current_temp + (rate_C_per_sec * 300);
+        
+        % Convert the rate per second to the rate per minute
+        rate_C_per_min = rate_C_per_sec * 60;
+        
+        % 4. Predict expected temperature in 5 minutes (300 seconds)
+        % Based on the stable current temperature and the filtered stable slope for prediction
+        predicted_temp = current_temp + (rate_C_per_sec * 300);
 
     % 5. Print to console
     fprintf('Current Temp: %.2f C | Rate: %.4f C/s | Expected in 5 mins: %.2f C\n', ...
