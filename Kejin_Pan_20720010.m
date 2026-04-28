@@ -23,7 +23,9 @@ end
 % Insert answers here
 
 %% TASK 1 - READ TEMPERATURE DATA, PLOT, AND WRITE TO A LOG FILE [20 MARKS]
-
+if ~exist('a', 'var')
+    a = arduino('COM9', 'Uno');
+end
 duration = 600; % The designated collection time
 temp = zeros(1, duration); % Pre-allocate memory for storing temperature data
 time = 1:duration;         % timer shaft
